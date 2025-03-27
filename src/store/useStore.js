@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { evaluate } from 'mathjs';
 
 const useStore = create(persist(
   (set) => ({
@@ -12,7 +13,7 @@ const useStore = create(persist(
     
     calculate: () => set((state) => {
       try {
-        const newResult = eval(state.input);
+        const newResult = evaluate(state.input);
         const newHistory = [...state.history, `${state.input} = ${newResult}`];
         return { result: newResult, history: newHistory, input: '' };
       } catch {
